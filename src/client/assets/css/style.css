@@ -8,8 +8,8 @@ body {
     box-sizing: border-box;
    }
    header, footer {
-    background-color: #333; 
-    color: white;
+    background-color: rgb(248, 229, 173, 0.3);
+    color: rgb(0, 0, 0);
     text-align: center;
     padding: 1em 0;
    }
@@ -43,9 +43,9 @@ body {
   font-weight:bold;
 }
 .articulo1 {
-  color:rgb(2, 0, 0); 
+  color:rgba(7, 69, 11, 0.785); 
   border: 2px solid crimson;
-  font-size:  12px; 
+  font-size:  16px; 
   font-weight:500;
 }
    
@@ -65,15 +65,46 @@ body {
     text-align: left; /* Centra el contenido */
 }
 
-
-   @media (max-width: 768px) {
-    .column {
-        flex: 0 0 100%; /* En pantallas más pequeñas, cada columna ocupa el 100% del ancho */
-        max-width: 100%; /* Ancho máximo del 100% */
+/*ESTILOS PARA EL BOTON DE INSTALACION DE LA APP EN CELULARES */
+#install-section {
+        margin: 15px auto !important;
+        text-align: center !important;
+        display: none; /* Para que el JS pueda mostrarlo */
     }
-   }
 
+.btn-app {
+    display: inline-block;
+    padding: 14px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
+    /* Fondo oro brillante */
+    background: linear-gradient(135deg, #fff8dc, #E6B800, #fff8dc);
+
+    /* Borde luminoso */
+    border: 2px solid rgba(255, 215, 0, 0.8);
+
+    /* Sombra elegante */
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.btn-app:hover {
+    /* Más brillo al pasar el mouse */
+    background: linear-gradient(135deg, #FFE066, #FFD700, #F4C430);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255, 215, 0, 0.55);
+}
+
+.btn-app:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(255, 215, 0, 0.35);
+}
+ 
 #clima_resultado { 
     margin-top: 20px; 
   }
@@ -169,3 +200,77 @@ button[type="submit"]:hover {
   text-align: center; /* Centra el texto */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añade una ligera sombra */
 }
+
+@media screen and (max-width: 576px) {
+     /* 1. Achicamos el contenedor del botón */
+    #install-section {
+        margin: 15px auto !important;
+        text-align: center !important;
+        display: block; /* Para que el JS pueda mostrarlo */
+    }
+
+    /* 2. Botón con dimensiones optimizadas para pulgar pequeño */
+    .btn-app {
+        font-size: 14px !important; /* Fuente más pequeña */
+        padding: 8px 12px !important; /* Padding reducido */
+        width: auto !important; /* No ocupa todo el ancho, solo lo necesario */
+        min-width: 140px; 
+        border-radius: 8px !important;
+        display: inline-block !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    /* 3. Ocultamos el texto largo para que no se desborde */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    footer {
+        background-color: rgb(26, 35, 126, 0.8); /* Color de fondo del footer */
+        color: #fff; /* Color del texto del footer */
+        text-align: center; /* Centra el texto del footer */
+        padding: 20px 0; /* Espacio interno del footer */
+        font-size: 12px;
+
+    }
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  /* 1. Achicamos el contenedor del botón */
+    #install-section {
+        margin: 15px auto !important;
+        text-align: center !important;
+        display: block; /* Para que el JS pueda mostrarlo */
+    }
+
+    /* 2. Botón con dimensiones optimizadas para pulgar pequeño */
+    .btn-app {
+        font-size: 14px !important; /* Fuente más pequeña */
+        padding: 8px 12px !important; /* Padding reducido */
+        width: auto !important; /* No ocupa todo el ancho, solo lo necesario */
+        min-width: 140px; 
+        border-radius: 8px !important;
+        display: inline-block !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    /* 3. Ocultamos el texto largo para que no se desborde */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    footer {
+        background-color: rgb(26, 35, 126, 0.8); /* Color de fondo del footer */
+        color: #fff; /* Color del texto del footer */
+        text-align: center; /* Centra el texto del footer */
+        padding: 20px 0; /* Espacio interno del footer */
+        font-size: 12px;
+
+    }
+}
+
+  @media (max-width: 768px) {
+    .column {
+        flex: 0 0 100%; /* En pantallas más pequeñas, cada columna ocupa el 100% del ancho */
+        max-width: 100%; /* Ancho máximo del 100% */
+    }
+   }

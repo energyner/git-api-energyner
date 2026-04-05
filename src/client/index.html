@@ -3,66 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 7 - Programando API </title>
+    <link rel="icon" href="../images/favicom.png" type="image/png">
+      
+    <title>Class 7 – Programming APIs </title>
      <!--Aplicando estilo a una estructura responsivo de tres columnas -->
- <link rel="stylesheet" href="./style.css" type="text/css"  >
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <link rel="stylesheet" href="./assets/css/style.css" type="text/css"  >
+ <!--LINKS Y SCRIPTS PARA CONVDERTIR LA APICACION EN APPs-->
+<link rel="manifest" href="./manifest.json">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+ <meta name="apple-mobile-web-app-title" content="Git-Api-Energyner">
+ <!-- <link rel="apple-touch-icon" href="./assets/img/logo2400x400.png"> -->
+  <!--FIN DE LOS LINKS Y SCRIPTS PARA CONVERTIR LA APICACION EN UNA APPs-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<meta name="robots" content="index">
+<meta name="author" content="René F. Ruano">
+<link rel="canonical" href="https://git-api-energyner/src/client/index.html">
+
+
 </head>
 <body>
 <header>
-    <h3> Class 7. Séptima Parte - APIs </h3>  
-   <p>Los scripts y ejercicios se encuentran en el Libro 7 
-    Quinta Parte, Programando Paso a Paso y Más a la venta en Amazon.</p>
+<a href="https://energyner.net/jscript/index.html" target="_blank">
+    <div class="logo">
+        <img src="./assets/img/logggo.png" alt="Energyner">
+    </div>
+</a>
+   
+<h3> Class 7. Part Seven – APIs </h3>
+<p>The scripts and exercises can be found in Book 7: Part Seven — Programming Step-by-Step and More, available for purchase on Amazon.</p>
+<p>Books 1, 2, 3, 4, 5, 6, and 7 of the "Programming Step by Step and More series" are available for sale on Amazon.</p>
 </header>
 <!--3 Divisiones responsives-->
 <div class="wrapper"> 
     <div class="column"> <!-- Primera división -->
-        <h3 class="subcapitulo1">APIs programadas y formas de acceso para ejecutarlas</h3>
-<h3 class="subcapitulo2"> 2.7 Programacion de APIs.</h3>
-<h4>2.7.1 APIs en el entorno local. Acceso desde la Terminal cmd y powerSchell</h4>
-<p><b>Desarrollo y consumo de las APIs utilizando Node.js y Express.</b><br>
-El consumo de este producto se realizara desde la Terminal 
-cmd y PowerShell del editor Visual Studio Code<br>
-Ir al apartado 2.7.1 APIs en el entorno local del Libro 5 Quinta Parte
-para crear el servidor local y poder realizar esta 
-práctica desde la Terminal.
-</p>
-<h4>2.7.1.2 Acceso a las APIs programadas desde la interfaz del navegador.</h4>
-<p><b>2.7.1.2 - 1 API Consumo Energetico</b></p>
-<!--API Consumo Energetico-->
+    <h3 class="subcapitulo1"> API Consumo Energetico</h3>
+<!--API Energy Consumption-->
+<h3 class="subcapitulo1"> Energy Consumption API</h3>
+<!--Energy Consumption API-->
 <form id="consumo-form">
-    <label for="potencia">Potencia:kW</label>
-    <input type="number" id="potencia" name="potencia" placeholder="potencia" required>
-    <label for="horas">Horas:h</label>
-    <input type="number" id="horas" name="horas" placeholder="horas" required>
-    <button type="submit">Calcular</button>
+<label for="potencia">Power (kW):</label>
+<input type="number" id="potencia" name="potencia" placeholder="Power" required>
+<label for="horas">Hours (h):</label>
+<input type="number" id="horas" name="horas" placeholder="Hours" required>
+<button type="submit">Calculate</button>
 </form>
 
-<h4> Resultado Consumo Energético, kW/h:</h4>
+<h4> Energy Consumption Result (kWh):</h4>
 <p id="resultadoConsumo"></p>
 
-<p><b>2.7.1.2 - 2 API Produccion Solar</b></p>
-<!--API Produccion Solar-->
+ <h3 class="subcapitulo1"> Solar Production API</h3>
+<!--Solar Production API-->
 <form id="produccion-form">
-    <label for="area">Área: m2</label>
-    <input type="number" id="area" name="area" placeholder="area"  required>
-    <label for="irradiacion">Irradiación: kW/h-m2</label>
-    <input type="number" id="irradiacion" name="irradiacion" placeholder="irradiacion"  required>
-    <label for="eficiencia">Eficiencia: (0 y 1)</label>
-    <input type="number" id="eficiencia" name="eficiencia" placeholder="eficiencia" step="0.01" required>
-    <button type="submit">Calcular</button>
+<label for="area">Area: m²</label>
+<input type="number" id="area" name="area" placeholder="Area" required>
+<label for="irradiacion">Irradiance: kW/h-m²</label>
+<input type="number" id="irradiacion" name="irradiacion" placeholder="Irradiance" required>
+<label for="eficiencia">Efficiency: (0 to 1)</label>
+<input type="number" id="eficiencia" name="eficiencia" placeholder="Efficiency" step="0.01" required>
+<button type="submit">Calculate</button>
 </form>
 
-<h4> Resultado Producción Solar, kWh:</h4>
+<h4> Solar Production Result, kWh:</h4>
 <p id="resultadoSolar"></p>
 
 </div>
 
     <div class="column"> <!-- Segunda división -->
-        <h3 class="subcapitulo1"> Incorporar nuevas APIs al sistema programado.</h3>
-        <p><b>2.7.1.3 - 1 API Huella de Carbono</b></p>
-        <p><b>Consumos y Reporte del Mes</b></p>
-        <!--API Huella de Carbono-->
+     <h3 class="subcapitulo1"> Carbon Footprint API</h3>
+    <p><b>Consumption and Monthly Report</b></p>
+        <!--API Carbon Footprint-->
         <form id="formulario">
             <label>Estado:</label>
             <select id="state">
@@ -122,56 +133,137 @@ práctica desde la Terminal.
             <label>Electricidad (kWh):</label>
             <input type="number" id="elect" placeholder="kWh">
             <label>Gas (galones):</label>
-            <input type="number" id="gas" placeholder="galones">
+            <input type="number" id="gas" placeholder="gal">
             <label>Agua (pies cúbicos):</label>
-            <input type="number" id="water" placeholder="pies cúbicos">
+            <input type="number" id="water" placeholder="cubic foots">
             <label>LPG (galones):</label>
-            <input type="number" id="lpg" placeholder="galones">
+            <input type="number" id="lpg" placeholder="gal">
             <label>Gas Natural (pies cúbicos):</label>
-            <input type="number" id="gn" placeholder="pies cúbicos">
+            <input type="number" id="gn" placeholder="cubic foots">
             <label>Distancia de vuelo (millas):</label>
-            <input type="number" id="fly" placeholder="millas">
+            <input type="number" id="fly" placeholder="miles">
             <label>Costos operativos (USD):</label>
             <input type="number" id="cogs" placeholder="USD">
             <label>Número de personas:</label>
-            <input type="number" id="person" placeholder="Numero">
-            <p>Realiza el calculo</p>
-            <button id="calcular">Calcular</button>
+            <input type="number" id="person" placeholder="Number">
+            <p>Calculate</p>
+            <button id="calcular">Send</button>
         </form>
         
         <div >
-            <label>Resultado Total:</label>
+            <label>Total Result:</label>
             <input id="resultado" readonly>
-            <label>Estado:</label>
+            <label>State:</label>
             <input id="estado" readonly>
-            <label>Huella Per Cápita:</label>
+            <label>Footprint Per Capita:</label>
             <input id="percapita" readonly>
-            <label>Huella/pc Estado:</label>
+            <label>Footprint/pc State:</label>
             <input id="per_capita_estado" readonly>
-            <label>Promedio/pc USA:</label>
+            <label>Average/pc USA:</label>
             <input id="promedioUSA" readonly>
-            <label>Promedio/pc Mundo:</label>
+            <label>Average/pc World:</label>
             <input id="promedioMundial" readonly>
-            <label>Porciento/pc Estado:</label>
+            <label>Percentage/pc State:</label>
             <input id="porcentajeEstado" readonly>
-            <label>Porciento/pc USA:</label>
+            <label>Percentage/pc USA:</label>
             <input id="porcentajeUSA" readonly>
-            <label>Porciento/pc Mundo:</label>
+            <label>Percentage/pc World:</label>
             <input id="porcentajeMundial" readonly>
-
-
-        </div>
+    </div>
     
  </div>
 
     <div class="column"> <!-- Tercera división -->
-        <h3 class="subcapitulo1">Nuevas APIs -----------------------</h3>
+        <!--PRIMER CALCULADOR--> 
+          <!--API Calories Burned While Walking. Health & Wellness-->      
+         <h3 class="subcapitulo1">
+           Calories Burned While Walking. Health & Wellness </h3>
+        <p> <b>
+            Algorithm to determine calorie expenditure for a person while walking or running.
+        </b><br>
+        <hr>
+        To lose or gain 1 kilogram of body weight (2.205 lb), an approximate energy deficit or surplus of 7,000 to 7,700 calories (kcal) ( about 25875 to 30535 btu) is required. 
+        This figure is based on the energy stored in body fat. <br>
+        Weight Loss: Creating a deficit of 7,000–7,700 kcal ( about 25875 to 30535 btu) results in a reduction of 1 kg (2.205 lb) of weight . 
+        Practical Example: If you reduce your daily intake by 500 kcal (1983 btu) , it will take you approximately 14 to 15 days to lose 1 kg (2.205 lb). <br>
+        Key Distinction: In the context of nutrition, "calories" typically refers to kilocalories (kcal = 3.96566 btu).
+        </p>
+        <p><b>Calculate</b>
+        <hr>
+    </p>
+    <form id="caloriasForm">
+          <label for="peso">Weight (lb):</label><br />
+          <input type="number" id="peso" name="peso" required /><br />
+
+          <label for="duracionCaminata">Walking Duration (min):</label>
+          <input
+            type="number"
+            id="duracionCaminata"
+            name="duracionCaminata"
+            required
+          /><br />
+
+          <label for="cantidadPasos">Number of Steps:</label>
+          <input
+            type="number"
+            id="cantidadPasos"
+            name="cantidadPasos"
+            required
+          /><br />
+
+          <label for="metroPaso">Step Length (ft):</label>
+          <input
+            type="number"
+            id="metroPaso"
+            name="metroPaso"
+            step="0.01"
+            required
+          /><br />
+          <br />
+         <button type="submit" class="efectuar">Calculate Calories</button>
+        </form>
+        <div class="articulo1">         
+          <div id="resultado-calories"></div>
+        </div>
+
+   <!--SEGUNDO CALCULADOR-->
+   <!--API Steam Generation --> 
+ <form id="form-generacion-vapor" class="steam-form">
+    <h3 class="subcapitulo1">Steam Generation Calculator</h3>
+    <h3 class="subcapitulo2">
+    Thermal Energy Generated by Steam
+    </h3>
+    <label for="flujo_vapor">Steam Flow (lb/h)</label>
+    <input type="number" id="flujo_vapor" name="flujo_vapor" step="0.01" required>
+
+    <label for="entalpia">Enthalpy (btu/lb)</label>
+    <input type="number" id="entalpia" name="entalpia" step="0.01" required>
+
+    <label for="eficiencia">Efficiency (0 - 1)</label>
+    <input type="number" id="eficiencia_calorias" name="eficiencia_calorias" step="0.01" value="0.85">
+
+    <button type="submit">Calculate Thermal Energy</button>
+
+    <div id="resultado-vapor" class="resultado"></div>
+</form>
 
 </div>
 
+<!--DIVISION HTML PARA EL LINK-->
+<div id="install-section" style="display:none;">
+    <a href="javascript:void(0)" id="install-button" class="btn-app">
+        📱 Install App de Git-Api-Energyner
+    </a>
 </div>
+<!--FIN DE LA DIVISION HTML PARA EL LINK-->
+
+
+</div><!--FIN DE LA DIVISION WRAPER-->
+
+<script type="module" src="./assets/js/api-app.js"></script>
+
 <footer>
-    <p>© 2025  APIs. (Cálculos Técnicos)</p>
+    <p>© 2026  APIs. Technical Calculations  – Health & Wellness  </p>
 </footer>
 
 

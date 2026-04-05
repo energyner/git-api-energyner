@@ -1,96 +1,185 @@
-async function calcularConsumoEnergetico(potencia, horas) {
-    const response = await fetch('http://localhost:3002/api/consumo-energetico', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ potencia, horas })
-    });
-    const data = await response.json();
-    console.log('Consumo Energético:', data.consumo_energetico);
-    document.getElementById('resultadoConsumo').innerText = `Consumo Energético: ${data.consumo_energetico}`;
-}
-
-async function calcularProduccionSolar(area, irradiacion, eficiencia) {
-    const response = await fetch('http://localhost:3002/api/produccion-solar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ area, irradiacion, eficiencia })
-    });
-    const data = await response.json();
-    console.log('Producción Solar:', data.produccion_solar);
-    document.getElementById('resultadoSolar').innerText = `Producción Solar: ${data.produccion_solar}`;
-}
-
-// Eventos del formulario
-document.getElementById('consumo-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const potencia = document.getElementById('potencia').value;
-    const horas = document.getElementById('horas').value;
-    calcularConsumoEnergetico(potencia, horas);
-});
-
-document.getElementById('produccion-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const area = document.getElementById('area').value;
-    const irradiacion = document.getElementById('irradiacion').value;
-    const eficiencia = document.getElementById('eficiencia').value;
-    calcularProduccionSolar(area, irradiacion, eficiencia);
-});
-
-//Nueva API huella-carbono
-
-document.getElementById("calcular").addEventListener("click", async function (event) {
-    event.preventDefault();
-
-    // Obtener los valores del formulario
-    const state = document.getElementById("state").value;
-    const elect = parseFloat(document.getElementById("elect").value) || 0;
-    const gas = parseFloat(document.getElementById("gas").value) || 0;
-    const water = parseFloat(document.getElementById("water").value) || 0;
-    const lpg = parseFloat(document.getElementById("lpg").value) || 0;
-    const gn = parseFloat(document.getElementById("gn").value) || 0;
-    const fly = parseFloat(document.getElementById("fly").value) || 0;
-    const cogs = parseFloat(document.getElementById("cogs").value) || 0;
-    const person = parseInt(document.getElementById("person").value) || 1;
-
-    // Crear el objeto de datos
-    const data = { state, elect, gas, water, lpg, gn, fly, cogs, person };
-
+/** nav.mjs
+ * * Función maestra para peticiones a la API Energyner Gateway
+ * Centraliza la lógica de fetch, manejo de errores y headers.
+ */
+async function apiPost(endpoint, data) {
     try {
-        // Enviar los datos al servidor
-        const response = await fetch("http://localhost:3002/api/huella-carbono", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+        const response = await fetch(`http://localhost:3002/api/${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         });
-
-        // Manejar la respuesta del servidor
-        if (!response.ok) {
-            const errorData = await response.json();
-            alert("Error: " + (errorData.error || "Error desconocido"));
-            return;
-        }
 
         const result = await response.json();
 
-        // Mostrar los resultados en el frontend
-        document.getElementById("resultado").value = result.total || 0;
-        document.getElementById("estado").value = result.estado || "N/A";
-        document.getElementById("percapita").value = result.per_capita || 0;
-        document.getElementById("per_capita_estado").value = result.per_capita_estado || 0;
-        document.getElementById("promedioUSA").value = result.promedioUSA || 0;
-        document.getElementById("promedioMundial").value = result.promedioMundial || 0;
-        document.getElementById("porcentajeEstado").value = result.porcentajeEstado + "%" || "N/A";
-        document.getElementById("porcentajeUSA").value = result.porcentajeUSA + "%" || "N/A";
-        document.getElementById("porcentajeMundial").value = result.porcentajeMundial + "%" || "N/A";
-        console.log("Detalles:", result.detalles);
+        if (!response.ok) {
+            throw new Error(result.error || 'Error desconocido en el servidor');
+        }
+        return result;
     } catch (error) {
-        console.error("Error al enviar los datos:", error);
-        alert("Hubo un error al comunicarse con el servidor.");
+        console.error(`Error en API [${endpoint}]:`, error);
+        alert(`Hubo un error: ${error.message}`);
+        return null;
+    }
+}
+
+// --- 1. API CONSUMO ENERGÉTICO ---
+document.getElementById('consumo-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        potencia: document.getElementById('potencia').value,
+        horas: document.getElementById('horas').value
+    };
+    const data = await apiPost('consumo-energetico', payload);
+    if (data) {
+        document.getElementById('resultadoConsumo').innerText = 
+            `Consumo Energético: ${data.consumo_energetico} kWh`;
+    }
+});
+
+// --- 2. API PRODUCCIÓN SOLAR ---
+document.getElementById('produccion-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        area: document.getElementById('area').value,
+        irradiacion: document.getElementById('irradiacion').value,
+        eficiencia: document.getElementById('eficiencia').value
+    };
+    const data = await apiPost('produccion-solar', payload);
+    if (data) {
+        document.getElementById('resultadoSolar').innerText = 
+            `Producción Solar: ${data.produccion_solar} kWh`;
+    }
+});
+
+// --- 3. API HUELLA DE CARBONO ---
+document.getElementById('calcular').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const payload = {
+        state: document.getElementById("state").value,
+        elect: parseFloat(document.getElementById("elect").value) || 0,
+        gas: parseFloat(document.getElementById("gas").value) || 0,
+        water: parseFloat(document.getElementById("water").value) || 0,
+        lpg: parseFloat(document.getElementById("lpg").value) || 0,
+        gn: parseFloat(document.getElementById("gn").value) || 0,
+        fly: parseFloat(document.getElementById("fly").value) || 0,
+        cogs: parseFloat(document.getElementById("cogs").value) || 0,
+        person: parseInt(document.getElementById("person").value) || 1
+    };
+
+    const result = await apiPost('huella-carbono', payload);
+    if (result) {
+        document.getElementById("resultado").value = result.total;
+        document.getElementById("estado").value = result.estado;
+        document.getElementById("percapita").value = result.per_capita;
+        document.getElementById("per_capita_estado").value = result.per_capita_estado;
+        document.getElementById("promedioUSA").value = result.promedioUSA;
+        document.getElementById("promedioMundial").value = result.promedioMundial;
+        document.getElementById("porcentajeEstado").value = result.porcentajeEstado + "%";
+        document.getElementById("porcentajeUSA").value = result.porcentajeUSA + "%";
+        document.getElementById("porcentajeMundial").value = result.porcentajeMundial + "%";
+    }
+});
+
+// --- 4. Calories Burned (Nueva) ---
+// Asegúrate de que este script se cargue después del formulario en el HTML
+
+document.getElementById('caloriasForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // 1. Leer valores del formulario (EN UNIDADES INGLESAS)
+    const peso = parseFloat(document.getElementById('peso').value);                 // lb
+    const duracionCaminata = parseFloat(document.getElementById('duracionCaminata').value); // min
+    const cantidadPasos = parseFloat(document.getElementById('cantidadPasos').value);
+    const metroPaso = parseFloat(document.getElementById('metroPaso').value);      // ft
+
+    const resultadoDiv = document.getElementById('resultado-calories');
+
+    // 2. Validación básica en frontend
+    if (
+        isNaN(peso) || peso <= 0 ||
+        isNaN(duracionCaminata) || duracionCaminata <= 0 ||
+        isNaN(cantidadPasos) || cantidadPasos <= 0 ||
+        isNaN(metroPaso) || metroPaso <= 0
+    ) {
+        resultadoDiv.innerHTML = `
+            <div style="color: red; font-weight: bold; margin-top: 10px;">
+                Please enter valid values greater than zero in all fields.
+            </div>
+        `;
+        return;
+    }
+
+    // 3. Armar payload EXACTAMENTE como lo espera el backend
+    const payload = {
+        peso,              // lb
+        duracionCaminata,  // min
+        cantidadPasos,
+        metroPaso          // ft
+    };
+
+    try {
+        // 4. Llamar a la API del backend
+        const data = await apiPost('calories-burned', payload);
+
+        // 5. Manejo de respuesta
+        if (!data) {
+            resultadoDiv.innerHTML = `
+                <div style="color: red; font-weight: bold; margin-top: 10px;">
+                    No response from server. Please try again.
+                </div>
+            `;
+            return;
+        }
+
+        if (data.error) {
+            resultadoDiv.innerHTML = `
+                <div style="color: red; font-weight: bold; margin-top: 10px;">
+                    ${data.error}
+                </div>
+            `;
+            return;
+        }
+
+        // 6. Mostrar resultado principal
+        resultadoDiv.innerHTML = `
+            <div style="color: green; font-weight: bold; margin-top: 2px;">
+                Calories Burned:<br> ${data.caloriasQuemadas} kcal
+            </div>
+        `;
+
+        // (Opcional) Si quieres mostrar detalles, puedes extender aquí:
+        // if (data.detalles) { ... }
+
+    } catch (err) {
+        console.error('Error calling calories-burned API:', err);
+        resultadoDiv.innerHTML = `
+            <div style="color: red; font-weight: bold; margin-top: 10px;">
+                An error occurred while processing the request.
+            </div>
+        `;
+    }
+});
+
+
+// --- 5. API STEAM GENERATION (New) ---
+document.getElementById('form-generacion-vapor').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        flujo_vapor: parseFloat(document.getElementById('flujo_vapor').value),
+        entalpia: parseFloat(document.getElementById('entalpia').value),
+        eficiencia: parseFloat(document.getElementById('eficiencia_calorias').value)
+    };
+    console.log("flujo_vapor:", flujo_vapor);
+    console.log("entalpia:", entalpia);
+    console.log("eficiencia:", eficiencia);
+
+    const data = await apiPost('steam-generator', payload);
+    if (data) {
+        document.getElementById('resultado-vapor').innerHTML = `
+            <div style="color: green; font-weight: bold; margin-top: 10px;">
+                Energía Térmica:<br> ${data.energia_termica} ${data.unidad}
+            </div>
+        `;
     }
 });
